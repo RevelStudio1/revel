@@ -1,0 +1,11 @@
+REVEL — Patryk Wojnar i Ignacy Żurawski
+
+1. Rozpakuj paczkę.
+2. Wrzuć pliki HTML oraz foldery assets, prace i downloads do głównego katalogu nowego repozytorium LOGIN.github.io. LOGIN zastąp dokładną nazwą nowego konta.
+3. Włącz Pages: main / root.
+4. Projekty będą pod /prace/nazwa/.
+
+Propozycja loginu: revel-studio, o ile dostępny. Propozycja e-maila: hello@revel.studio (domena i skrzynka nie zostały założone ani sprawdzone). Alternatywa do założenia w Gmail: hello.revel.studio@gmail.com, jeśli wolna.
+Do czasu założenia skrzynki strona korzysta z działającego kontaktu Patryka.
+
+Wersja PL/EN, dostosowane układy mobilne. Test wizualny na fizycznym telefonie pozostaje do wykonania. AI przeglądarki wymaga zgodnego komputera, tryb regułowy działa niezależnie.
