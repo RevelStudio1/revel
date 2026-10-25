@@ -1,0 +1,10 @@
+const assert=require('assert'),{rules,clean}=require('./dist/prace/nexus/intake-core.js');
+const pl=rules('Kontakt: Anna Nowak\nFirma: Bloom Studio\nAutomatyzacja AI. Budżet: 12 tys. PLN',false);
+assert.equal(pl.name,'Anna Nowak');assert.equal(pl.company,'Bloom Studio');assert.equal(pl.type,'automation');assert.equal(pl.budget,12000);
+assert.equal(rules('Company: Shop\nWe need an online store. Budget: 8500 PLN',true).budget,8500);
+assert.equal(rules('Potrzebujemy nowej strony internetowej bez ustalonego budżetu.',false).budget,null);
+assert.equal(rules('Budget: 500 USD. We need a website for our company.',true).budget,null);
+assert.equal(clean({summary:'x',reply:'y',budget:-1,type:'invalid'}).budget,null);
+assert.equal(clean({summary:'x',reply:'y',type:'invalid'}).type,'other');
+assert.throws(()=>clean({name:'fake'}));assert.throws(()=>rules('abc',false));
+console.log('PASS: PL/EN fields, budget units, unknown budget, non-PLN currency, malformed AI output');

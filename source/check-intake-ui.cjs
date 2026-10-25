@@ -1,0 +1,10 @@
+const fs=require('fs'),vm=require('vm'),assert=require('assert');
+const elements=new Map(),db=new Map();const el=s=>{if(!elements.has(s))elements.set(s,{value:'',disabled:false,hidden:false,textContent:'',append(){},replaceChildren(){}});return elements.get(s)};
+const context={Date,Math,JSON,Number,String,AbortController,CustomEvent:class{},confirm:()=>true,document:{querySelector:el,createElement:()=>({append(){}}),addEventListener(){}},window:{I18n:{t:s=>s,language:'en'},dispatchEvent(){}},App:{read:(k,v)=>db.get(k)??structuredClone(v),save:(k,v)=>{db.set(k,structuredClone(v));return true},id:()=>String(Math.random()),toast(){},download(){}},IntakeCore:require('./dist/prace/nexus/intake-core.js')};
+vm.createContext(context);vm.runInContext(fs.readFileSync('dist/prace/nexus/intake.js','utf8'),context);
+assert.equal(el('#analyze-ai').disabled,true);
+el('#analyze-rules').onclick();assert.equal(el('#intake-budget').value,12000);assert.equal(el('#intake-review').hidden,false);
+el('#intake-review').onsubmit({preventDefault(){}});assert.equal(db.get('pw-nexus-v1').length,1);
+el('#intake-review').onsubmit({preventDefault(){}});assert.equal(db.get('pw-nexus-v1').length,1);
+context.window.LanguageModel={create:async()=>({prompt:async()=>JSON.stringify({name:'AI Test',company:'Test',budget:null,type:'website',summary:'Requested a website',reply:'Please clarify scope.'}),destroy(){}})};
+(async()=>{await el('#analyze-ai').onclick();assert.equal(el('#engine-badge').textContent,'AI / BROWSER MODEL');assert.equal(el('#intake-name').value,'AI Test');context.window.LanguageModel.create=async()=>{throw Error('unavailable')};await el('#analyze-ai').onclick();assert.equal(el('#analyze-rules').disabled,false);assert.ok(el('#engine-status').textContent.includes('AI nie zakończyło'));console.log('PASS: unavailable AI, rules-to-CRM, duplicate prevention, mocked AI response and error recovery (not a real model test)')})().catch(e=>{console.error(e);process.exit(1)});
